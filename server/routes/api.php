@@ -18,4 +18,4 @@ use App\Http\Controllers\UserController;
 Route::post('/user/register', [UserController::class, 'registerUser']);
 Route::post('/user/login', [UserController::class, 'loginUser']);
 Route::delete('/user/delete/{id}', [UserController::class, 'deleteUser']);
-Route::put('/user/update/{id}', [UserController::class, 'updateUser']);fdsfsd
+Route::put('/user/update/{id}', [UserController::class, 'updateUser']);
