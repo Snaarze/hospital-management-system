@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PatientController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,3 +20,6 @@ Route::post('/user/register', [UserController::class, 'registerUser']);
 Route::post('/user/login', [UserController::class, 'loginUser']);
 Route::delete('/user/delete/{id}', [UserController::class, 'deleteUser']);
 Route::put('/user/update/{id}', [UserController::class, 'updateUser']);
+
+
+Route::get('./patient/')
