@@ -1,4 +1,5 @@
-// app/Http/Controllers/MedicalRecordController.php
+<php?
+
 namespace App\Http\Controllers;
 
 use App\Models\MedicalRecord;
