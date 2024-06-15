@@ -1,59 +1,54 @@
 <?php
 
-// app/Http/Controllers/AppointmentController.php
 namespace App\Http\Controllers;
 
 use App\Models\Appointment;
 use Illuminate\Http\Request;
 
-class AppointmentController extends Controller
-{
-    public function index()
-    {
-        return Appointment::all();
+class AppointmentController extends Controller {
+
+    public function getAppointments() {
+        $appointments = Appointment::all();
+        return response()->json($appointments);
     }
 
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'patient_id' => 'required|exists:patients,id',
-            'doctor_id' => 'required|exists:doctors,id',
+    public function getAppointment($id) {
+        $appointment = Appointment::find($id);
+        return response()->json($appointment);
+    }
+
+    public function registerAppointment(Request $request) {
+        $validatedData = $request->validate([
+            'patient_id' => 'required|integer',
+            'doctor_id' => 'required|integer',
             'appointment_date' => 'required|date',
             'status' => 'required|string',
             'reason' => 'required|string',
         ]);
 
-        $appointment = Appointment::create($validated);
-
-        return response()->json($appointment, 201);
+        $appointment = Appointment::create($validatedData);
+        return response()->json(['appointment' => $appointment], 201);
     }
 
-    public function show($id)
-    {
-        return Appointment::findOrFail($id);
-    }
-
-    public function update(Request $request, $id)
-    {
-        $validated = $request->validate([
-            'patient_id' => 'exists:patients,id',
-            'doctor_id' => 'exists:doctors,id',
-            'appointment_date' => 'date',
-            'status' => 'string',
-            'reason' => 'string',
+    public function updateAppointment(Request $request, $id) {
+        $validatedData = $request->validate([
+            'patient_id' => 'required|integer',
+            'doctor_id' => 'required|integer',
+            'appointment_date' => 'required|date',
+            'status' => 'required|string',
+            'reason' => 'required|string',
         ]);
 
-        $appointment = Appointment::findOrFail($id);
-        $appointment->update($validated);
+        $patient = Appointment::find($id);
+        $patient->update($validatedData);
 
-        return response()->json($appointment, 200);
+        return response()->json($patient, 200);
     }
 
-    public function destroy($id)
-    {
-        $appointment = Appointment::findOrFail($id);
+    public function deleteAppointment($id) {
+        $appointment = Appointment::find($id);
         $appointment->delete();
 
-        return response()->json(null, 204);
+        return response()->json($appointment, 200);
     }
 }
